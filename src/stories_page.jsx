@@ -6,7 +6,7 @@ class StoriesPage extends React.Component {
     return (
       <div className="page page--stories">
         <h1 className="page__title">Story List</h1>
-        <StoryList stories={this.props.store.stories} />
+        <StoryList />
       </div>
     );
   }
