@@ -1,0 +1,23 @@
+{
+  "name": "boom",
+  "version": "0.0.1",
+  "licence": "MIT",
+  "main": "src/main.jsx",
+  "scripts": {
+    "build": "browserify src/main.jsx -o build/main.js --extension .jsx",
+    "watch": "watchify src/main.jsx -o build/main.js -d -v --extension .jsx"
+  },
+  "dependencies": {
+    "react": "^0.13.1"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.0",
+    "watchify": "^3.1.0",
+    "babelify": "^6.0.0"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  }
+}
