@@ -5,15 +5,13 @@ import Story from "./story";
 class StoryList extends React.Component {
   constructor() {
     super();
-    this.state = {
-      stories: []
-    };
+    this.state = explosive('state');
+    explosive().on('state:change', (state) => this.setState(state));
   }
 
   componentDidMount() {
     let onSuccess = function(json) {
-      this.setState({stories: json});
-      window.explosive('ajaxFinished');
+      explosive().setState({stories: json}).ajaxFinished();
     };
 
     reqwest({
@@ -23,7 +21,7 @@ class StoryList extends React.Component {
   }
 
   render() {
-    let storyNodes = this.state.stories.map((story) =>
+    let storyNodes = (this.state.stories || []).map((story) =>
       <Story
         key={story.id}
         title={story.title}

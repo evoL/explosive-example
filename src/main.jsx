@@ -1,13 +1,12 @@
 import React from "react";
 import StoriesPage from "./stories_page";
-import {explosive} from "./explosive";
+import {explosive as x} from "./explosive";
 
 if (typeof window.explosive === "undefined") {
-  window.explosive = explosive;
+  window.explosive = x;
 }
 
 React.render(
   <StoriesPage />,
   document.getElementById('App')
 );
-
