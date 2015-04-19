@@ -3,8 +3,11 @@ import reqwest from "reqwest";
 import Story from "./story";
 
 class StoryList extends React.Component {
-  state = {
-    stories: []
+  constructor() {
+    super();
+    this.state = {
+      stories: []
+    };
   }
 
   componentDidMount() {
