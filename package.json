@@ -3,11 +3,15 @@
   "version": "0.0.1",
   "licence": "MIT",
   "main": "src/main.jsx",
+  "browserOutput": "build/main.js",
+  "layout": "index.html",
   "scripts": {
     "build": "browserify src/main.jsx -o build/main.js --extension .jsx",
     "watch": "watchify src/main.jsx -o build/main.js -d -v --extension .jsx"
   },
   "dependencies": {
+    "express": "^4.12.3",
+    "jsdom": "^4.2.0",
     "react": "^0.13.1",
     "reqwest": "^1.1.5"
   },
