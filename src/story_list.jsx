@@ -11,10 +11,15 @@ class StoryList extends React.Component {
   }
 
   componentDidMount() {
+    let onSuccess = function(json) {
+      this.setState({stories: json});
+      window.explosive('ajaxFinished');
+    };
+
     reqwest({
       url: "https://fierce-gorge-1132.herokuapp.com/stories",
       type: 'json'
-    }).then((json) => this.setState({stories: json}));
+    }).then((json) => onSuccess.call(this, json));
   }
 
   render() {

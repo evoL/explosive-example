@@ -10,6 +10,7 @@
     "watch": "watchify src/main.jsx -o build/main.js -d -v --extension .jsx"
   },
   "dependencies": {
+    "eventemitter3": "^0.1.6",
     "express": "^4.12.3",
     "jsdom": "^4.2.0",
     "react": "^0.13.1",

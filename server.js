@@ -3,6 +3,7 @@ import fs from "fs";
 import url from "url";
 import jsdom from "jsdom";
 import packageInfo from "./package.json";
+import * as Explosive from "./src/explosive";
 
 let browserFileName = packageInfo.browserOutput;
 let layoutFileName = packageInfo.layout;
@@ -30,17 +31,11 @@ server.get('/', function(request, response) {
 
   console.log(`Starting ${request.method} ${formattedUrl}`);
 
-  jsdom.env({
-    html: layout,
+  let document = jsdom.jsdom(layout, {
     url: formattedUrl,
     document: {
       referrer: request.headers.referer,
       cookie: request.headers.cookie
-    },
-    features: {
-      FetchExternalResources: ["script"],
-      ProcessExternalResources: ["script"],
-      SkipExternalResources: false
     },
     done: function(errors, window) {
       if (errors) {
@@ -50,10 +45,14 @@ server.get('/', function(request, response) {
           "</ul>"
         );
         errors.forEach((e) => console.error(e.data.error));
-      } else {
-        response.send(jsdom.serializeDocument(window.document));
       }
     }
+  });
+  let window = document.defaultView;
+
+  window.explosive = Explosive.explosive;
+  Explosive.instance.once('ajax:finish', function() {
+    response.send(jsdom.serializeDocument(document));
   });
 });
 
