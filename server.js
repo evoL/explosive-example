@@ -34,7 +34,7 @@ server.get('/' + browserFileName, function(request, response) {
 server.get('/', function(request, response) {
   let formattedUrl = urlFor(request);
 
-  console.log(`Starting ${request.method} ${formattedUrl}`);
+  console.log(`${request.method} ${formattedUrl}`);
 
   let document = jsdom.jsdom(layout, {
     url: formattedUrl,
@@ -50,7 +50,7 @@ server.get('/', function(request, response) {
     if (document.errors) {
       response.send(
         "<h1>There were errors while trying to prerender the page.</h1><ul>" +
-        document.errors.map((e) => `<li>${e.message}<br><pre>${e.data.error}</pre></li>`).join('') +
+        document.errors.map((e) => `<li><strong>${e.message}</strong><br><pre>${e.data.error}</pre></li>`).join('') +
         "</ul>"
       );
     }
