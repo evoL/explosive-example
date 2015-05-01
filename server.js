@@ -31,7 +31,7 @@ server.get('/' + browserFileName, function(request, response) {
 });
 
 // Prerender the app
-server.get('/', function(request, response) {
+server.use(function(request, response, next) {
   let formattedUrl = urlFor(request);
 
   console.log(`${request.method} ${formattedUrl}`);
