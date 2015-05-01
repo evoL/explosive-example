@@ -1,5 +1,5 @@
 import React from "react";
-import reqwest from "reqwest";
+import HackerNews from "./hacker_news";
 import Story from "./story";
 
 class StoryList extends React.Component {
@@ -10,14 +10,11 @@ class StoryList extends React.Component {
   }
 
   componentDidMount() {
-    let onSuccess = function(json) {
-      explosive().setState({stories: json}).ajaxFinished();
-    };
+    let hn = new HackerNews;
 
-    reqwest({
-      url: "https://fierce-gorge-1132.herokuapp.com/stories",
-      type: 'json'
-    }).then((json) => onSuccess.call(this, json));
+    hn.topStories().then((json) => {
+      explosive().setState({stories: json}).ajaxFinished();
+    });
   }
 
   render() {
@@ -26,7 +23,7 @@ class StoryList extends React.Component {
         key={story.id}
         title={story.title}
         score={story.score}
-        url={story.url}
+        url={story.url || `https://news.ycombinator.com/item?id=${story.id}`}
       />
     );
 
