@@ -24,7 +24,7 @@ server.use(express.static('public'));
 
 // Send the browser JS file
 server.get('/' + browserFileName, function(request, response) {
-  console.log(`Starting ${request.method} ${urlFor(request)}`)
+  console.log(`${request.method} ${urlFor(request)}`)
   response.sendFile(browserFileName, {
     root: __dirname
   });
