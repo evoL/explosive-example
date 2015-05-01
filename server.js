@@ -92,6 +92,7 @@ server.use(function(request, response, next) {
     firstScript.parentNode.insertBefore(script, firstScript);
 
     // Send HTML
+    response.statusCode = 200;
     sendResponse(jsdom.serializeDocument(document));
   });
 });
