@@ -33,6 +33,17 @@ server.get('/' + browserFileName, function(request, response) {
 // Prerender the app
 server.use(function(request, response, next) {
   let formattedUrl = urlFor(request);
+  let responseSent = false;
+  let responseTimeout;
+  let sendResponse = function(r) {
+    if (responseSent) {
+      return;
+    }
+
+    response.send(r);
+    responseSent = true;
+    clearTimeout(responseTimeout);
+  };
 
   console.log(`${request.method} ${formattedUrl}`);
 
@@ -48,7 +59,8 @@ server.use(function(request, response, next) {
   // Render the error list if something goes wrong
   window.addEventListener('load', function() {
     if (document.errors) {
-      response.send(
+      response.statusCode = 500;
+      sendResponse(
         "<h1>There were errors while trying to prerender the page.</h1><ul>" +
         document.errors.map((e) => `<li><strong>${e.message}</strong><br><pre>${e.data.error}</pre></li>`).join('') +
         "</ul>"
@@ -61,6 +73,9 @@ server.use(function(request, response, next) {
   virtualConsole.on("log", function(message) {
     console.log("Client-side -", message);
   });
+
+  // Let the page render after 5s
+  responseTimeout = setTimeout(sendResponse, 5000);
 
   // Setup Explosive runtime
   window.explosive = Explosive.explosive;
@@ -77,7 +92,7 @@ server.use(function(request, response, next) {
     firstScript.parentNode.insertBefore(script, firstScript);
 
     // Send HTML
-    response.send(jsdom.serializeDocument(document));
+    sendResponse(jsdom.serializeDocument(document));
   });
 });
 
