@@ -12,7 +12,7 @@ class StoryList extends React.Component {
   componentDidMount() {
     let hn = new HackerNews;
 
-    hn.topStories().then((json) => {
+    hn[this.props.endpoint]().then((json) => {
       explosive().setState({stories: json}).ajaxFinished();
     });
   }

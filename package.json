@@ -16,6 +16,7 @@
     "jsdom": "^4.2.0",
     "lodash.assign": "^3.1.0",
     "react": "^0.13.2",
+    "react-router": "^0.13.3",
     "reqwest": "^1.1.5"
   },
   "devDependencies": {
