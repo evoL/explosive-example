@@ -1,6 +1,6 @@
 # explosive-example
 
-This repository contains a simple React application that is can be rendered server-side using [Explosive](https://github.com/evoL/explosive).
+This repository contains a simple React application that can be rendered server-side using [Explosive](https://github.com/evoL/explosive).
 
 ## Try it out
 
