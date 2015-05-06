@@ -6,15 +6,19 @@ class StoryList extends React.Component {
   constructor() {
     super();
     this.state = explosive('state');
-    explosive().on('state:change', (state) => this.setState(state));
+    explosive().on('state:change', this.setState, this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let hn = new HackerNews;
 
     hn[this.props.endpoint]().then((json) => {
-      explosive().setState({stories: json}).ajaxFinished();
+      explosive().set({stories: json}).loadFinished();
     });
+  }
+
+  componentWillUnmount() {
+    explosive().removeListener('state:change', this.setState, this);
   }
 
   render() {
